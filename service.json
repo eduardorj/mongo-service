@@ -2,7 +2,7 @@
   "service": {
     "specVersion": "v3",
     "catalog_metadata": {
-      "name": "Copy of Mongo DB - PoC Bradesco",
+      "name": "Copy of Mongo DB - Proof of Concept",
       "description": "Deploy do MongoDB em Máquina Virtual na IBM Cloud ou em Container no IBM Cloud Private (ICP)",
       "image": "serviceicon_7.svg",
       "category": "CloudServices",
