@@ -1,0 +1,208 @@
+{
+  "service": {
+    "specVersion": "v3",
+    "catalog_metadata": {
+      "name": "Copy of Mongo DB - PoC Bradesco",
+      "description": "Deploy do MongoDB em Máquina Virtual na IBM Cloud ou em Container no IBM Cloud Private (ICP)",
+      "image": "serviceicon_7.svg",
+      "category": "CloudServices",
+      "bullets": [
+        {
+          "title": "Mongo DB VM",
+          "description": "Instância simples do MongoDB em Máquina Virtual"
+        },
+        {
+          "title": "MongoDB em Container",
+          "description": "Instância simples do MongoDB em Container"
+        }
+      ],
+      "providerDisplayName": "IBM",
+      "longDescription": "",
+      "documentationUrl": "",
+      "supportUrl": "",
+      "bindable": false,
+      "updatable": "",
+      "author": "ICP"
+    },
+    "tags": [],
+    "actions": [
+      {
+        "type": "provision",
+        "name": "Provision",
+        "description": "Default action for deployment of service",
+        "input_parameters": [
+          {
+            "name": "mongo-deploy-model",
+            "label": "mongo-deploy-model",
+            "customtype": "string",
+            "type": "string",
+            "immutable": false,
+            "hidden": false,
+            "required": true,
+            "secured": false,
+            "options": [
+              {
+                "label": "vm",
+                "value": "vm",
+                "default": false
+              },
+              {
+                "label": "container",
+                "value": "container",
+                "default": false
+              }
+            ]
+          }
+        ],
+        "flow": {
+          "conditions": [
+            {
+              "decision": {
+                "title": "Mongo Deploy Decision",
+                "options": [
+                  {
+                    "case": "vm",
+                    "sequence": {
+                      "0": "mongodbod6fef625"
+                    }
+                  },
+                  {
+                    "case": "container",
+                    "sequence": {
+                      "0": "ibmcharta66d43c2"
+                    }
+                  }
+                ],
+                "id": "decisionce771c10",
+                "mapped_parameter": "${input_parameters.mongo-deploy-model}"
+              }
+            }
+          ],
+          "templates": [
+            {
+              "MongoDB on a Single VM": {
+                "title": "MongoDB on VM",
+                "template_name": "MongoDB on a Single VM",
+                "version": "2.1",
+                "id": "mongodbod6fef625",
+                "template_type": "Terraform",
+                "template_content_type": "IBM",
+                "template_provider": "IBM",
+                "instance_name": "MongoDBVM",
+                "cloud_connection_name": "IBM-Cloud",
+                "template_data_objects": {
+                  "bastionhost": "DefaultNoBastionHostRequired"
+                },
+                "template_params": {
+                  "datacenter": "ams01",
+                  "hostname": "mongodbvm",
+                  "public_ssh_key": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCuBwCfMAS2vjS08ZImM1XMkCeyjgWh/U9Mmwu6NSDfa99LgbGCX9/cYgv9aqRI9kPY2wRSltZmAMxmRlDG54oTCrLk7jZEf3kERX2XRXIYvbXLM3dPNnLi99MzWsJCYYqlzc7fE5Syb+eV0J8xlVG8ekaOI1YIcy4tUWm1pq0NMfwZ9r2uR78IjPIa5YRhYmdmBroyEDSjvDVSCuqUajUIMWtdfWiJt2hlebjkG/N+rnRfMpRJkh/2Vv6ji4UL+PLam41fSarHYF//GwJ8vmr6vnYga6gAZvsvgQJAmWDtapIDNmyx+Ka3t6JM53bhzfMWqRV/uHrx2oZXVP06xGbJ your_email@example.com"
+                },
+                "outputs": []
+              }
+            },
+            {
+              "ibm-charts/ibm-mongodb-dev": {
+                "title": "MongoDB on Container",
+                "template_name": "ibm-mongodb-dev",
+                "version": "1.1.3",
+                "id": "ibmcharta66d43c2",
+                "template_type": "Helm",
+                "template_content_type": "IBM Cloud Private",
+                "template_provider": "IBM Cloud Private",
+                "instance_name": "MongoDBContainer",
+                "cloud_connection_name": "ICP-Cluster-01",
+                "template_dataobjects": {},
+                "template_params": {
+                  "namespace": "cert-manager",
+                  "arch-amd64": "2 - No preference",
+                  "arch-ppc64le": "2 - No preference",
+                  "arch-s390x": "2 - No preference",
+                  "image-repository": "ibmcom/mongodb",
+                  "image-tag": "3.6.0",
+                  "image-imagePullPolicy": "IfNotPresent",
+                  "persistence-enabled": true,
+                  "persistence-useDynamicProvisioning": false,
+                  "dataVolume-name": "datavolume",
+                  "dataVolume-existingClaimName": "",
+                  "dataVolume-storageClassName": "",
+                  "dataVolume-size": "20Gi",
+                  "volumeMounts-data-subPath": "",
+                  "resources-requests-memory": "256Mi",
+                  "resources-requests-cpu": "100m",
+                  "resources-limits-cpu": 2,
+                  "resources-limits-memory": "4Gi",
+                  "service-name": "ibm-mongodb-dev",
+                  "service-type": "NodePort",
+                  "service-port": 27017,
+                  "database-user": "mongo",
+                  "database-password": "",
+                  "database-name": "admin",
+                  "database-dbcmd": "mongo"
+                },
+                "outputs": [],
+                "template_repo": "ibm-charts",
+                "template_data_objects": {}
+              }
+            }
+          ],
+          "resthooks": [],
+          "notifications": [],
+          "sequence": {
+            "0": "decisionce771c10"
+          }
+        },
+        "output_parameters": []
+      }
+    ],
+    "plans": [
+      {
+        "name": "Mongo DB em Máquina Virtual",
+        "description": "Cloud Pública - IBM Cloud",
+        "actions": [],
+        "plan_parameters": [
+          {
+            "name": "mongo-deploy-model",
+            "label": "mongo-deploy-model",
+            "customtype": "string",
+            "type": "string",
+            "immutable": false,
+            "hidden": false,
+            "required": true,
+            "secured": false,
+            "options": [
+              {
+                "label": "vm",
+                "value": "vm",
+                "default": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Mongo DB em Container",
+        "description": "Cluster Local - IBM Cloud Private",
+        "plan_parameters": [
+          {
+            "name": "mongo-deploy-model",
+            "label": "mongo-deploy-model",
+            "customtype": "string",
+            "type": "string",
+            "immutable": false,
+            "hidden": false,
+            "required": true,
+            "secured": false,
+            "options": [
+              {
+                "label": "container",
+                "value": "container",
+                "default": false
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
