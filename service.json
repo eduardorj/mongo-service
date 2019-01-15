@@ -2,18 +2,18 @@
   "service": {
     "specVersion": "v3",
     "catalog_metadata": {
-      "name": "Copy of Mongo DB - Proof of Concept",
-      "description": "Deploy do MongoDB em Máquina Virtual na IBM Cloud ou em Container no IBM Cloud Private (ICP)",
+      "name": "Mongo DB - Proof of Concept",
+      "description": "This service offers a deployment of MongoDB on Virtual Machine on IBM Cloud or Container in IBM Cloud Private (ICP)",
       "image": "serviceicon_7.svg",
       "category": "CloudServices",
       "bullets": [
         {
-          "title": "Mongo DB VM",
-          "description": "Instância simples do MongoDB em Máquina Virtual"
+          "title": "Mongo DB Virtual Machine",
+          "description": "Basic instance of MongoDB on Virtual Machine"
         },
         {
-          "title": "MongoDB em Container",
-          "description": "Instância simples do MongoDB em Container"
+          "title": "MongoDB in Container",
+          "description": "Basic instance of MongoDB in Container"
         }
       ],
       "providerDisplayName": "IBM",
@@ -157,8 +157,8 @@
     ],
     "plans": [
       {
-        "name": "Mongo DB em Máquina Virtual",
-        "description": "Cloud Pública - IBM Cloud",
+        "name": "MongoDB on Virtual Machine",
+        "description": "Public Cloud - IBM Cloud",
         "actions": [],
         "plan_parameters": [
           {
@@ -181,8 +181,8 @@
         ]
       },
       {
-        "name": "Mongo DB em Container",
-        "description": "Cluster Local - IBM Cloud Private",
+        "name": "MongoDB in Container",
+        "description": "Local Cluster - IBM Cloud Private",
         "plan_parameters": [
           {
             "name": "mongo-deploy-model",
